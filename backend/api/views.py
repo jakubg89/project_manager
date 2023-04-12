@@ -15,7 +15,7 @@ from rest_framework_simplejwt.views import (
 from .serializers import (
     MyTokenObtainPairSerializer,
     UserSerializer,
-
+    ProjectSerializer,
 )
 
 from .models import User, Project
@@ -61,7 +61,19 @@ class UserView(ModelViewSet):
 
 
 class ProjectView(ModelViewSet):
-    pass
+    serializer_class = ProjectSerializer
+    permission_classes = [
+        IsAuthenticated,
+    ]
+
+    def get_queryset(self):
+        if self.action in ["list"]:
+            self.queryset = Project.objects.filter(user=self.request.user)
+        elif self.action in ["destroy", "retrieve", "update", "partial_update"]:
+            self.queryset = Project.objects.filter(id=self.request.data)
+        else:
+            self.queryset = None
+        return super().get_queryset()
 
 
 class ProjectAssignedUserView(GenericAPIView, mixins.ListModelMixin):

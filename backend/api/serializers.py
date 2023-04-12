@@ -3,7 +3,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from .models import (
     User,
-
+    Project,
 )
 
 
@@ -31,4 +31,13 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    pass
+    name = serializers.CharField(max_length=35, required=True)
+    about = serializers.CharField(max_length=500)
+    status = serializers.CharField(max_length=1, required=False)
+    start_date = serializers.DateTimeField()
+    end_date = serializers.DateTimeField()
+    user_id = serializers.IntegerField(required=True)
+
+    class Meta:
+        model = Project
+        fields = ['id', 'name', 'about', 'status', 'start_date', 'end_date', 'user_id']
