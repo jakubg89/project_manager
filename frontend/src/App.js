@@ -6,9 +6,14 @@ import Headers from "./components/Headers";
 function App() {
   return (
     <Router>
-      <div className="container">
-        <Headers />
-      </div>
+      <AuthProvider>
+        <div className="container">
+          <Headers />
+          <Routes>
+            <Route path="/login" element={<Login/>}/>
+          </Routes>
+        </div>
+      </AuthProvider>
     </Router>
   );
 }
