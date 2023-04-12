@@ -51,7 +51,7 @@ class Project(models.Model):
     status = models.CharField(
         max_length=1, choices=STATUS_CHOICES, default=STATUS_CHOICES[0][0]
     )
-    # added_date = models.DateTimeField(auto_now_add=True)
+    added_date = models.DateTimeField(auto_now_add=True)
     start_date = models.DateTimeField(blank=False, null=True)
     end_date = models.DateTimeField(blank=False, null=True)
     user = models.ForeignKey(
