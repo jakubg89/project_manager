@@ -29,6 +29,13 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'email', 'password', 'gender', 'age', 'phone_number']
 
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        user = User(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
+
 
 class ProjectSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=35, required=True)
