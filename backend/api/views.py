@@ -27,12 +27,18 @@ class MyTokenObtainPairView(TokenObtainPairView):
 
 class GenderChoices(APIView):
     def get(self, request):
-        return Response({"gender_choices": User.GENDER_CHOICES})
+        gender = {}
+        for i in User.GENDER_CHOICES:
+            gender.update({i[0]: i[1]})
+        return Response({"gender_choices": gender})
 
 
 class ProjectChoices(APIView):
     def get(self, request):
-        return Response({"status": Project.STATUS_CHOICES})
+        project = {}
+        for i in Project.STATUS_CHOICES:
+            project.update({i[0]: i[1]})
+        return Response({"status": project})
 
 
 class UserView(ModelViewSet):
