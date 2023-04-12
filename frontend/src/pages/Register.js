@@ -1,4 +1,4 @@
-
+import { Link } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 
 const Register = () => {
@@ -6,6 +6,7 @@ const Register = () => {
   const [password, setPassword] = useState('')
   const [email, setEnamil] = useState('')
   const [age, setAge] = useState('')
+
   const [pickedGender, setPickedGender] = useState('');
   const selectRef = useRef(null);
 
@@ -74,11 +75,24 @@ const Register = () => {
   }, []);
 
   return (
-    <form className="add-form" onSubmit={onSubmit}>
-      <h1>REJESTRACJA</h1>
-      <div className="form-control">
-        <label>Email</label>
-        <input  type='text' 
+    <div className='auth-form-container'>
+    <form className="auth-form" onSubmit={onSubmit}>
+        <div className="auth-form-content">
+
+      <h3 className="auth-form-title">Sign up</h3>
+                    <div className="text-center">                    
+                        <span className="link-primary">
+                            <Link to="/login" >loguj</Link>
+                        </span>
+                    </div>
+
+
+
+
+      <div className="form-group mt-3">
+        <label>Email address</label>
+        <input  type='text'
+                className="form-control mt-1" 
                 placeholder="Enter email" 
                 value={email} 
                 onChange={(e) => setEnamil(e.target.value)} 
@@ -88,9 +102,10 @@ const Register = () => {
                 />
       </div>
 
-      <div className="form-control">
+      <div className="form-group mt-3">
         <label>Password</label>
-        <input  type='text' 
+        <input  type='text'
+                className="form-control mt-1" 
                 placeholder="Password" 
                 value={password} 
                 onChange={(e) => setPassword(e.target.value)}
@@ -98,9 +113,9 @@ const Register = () => {
                 />
       </div>
 
-      <div className='form-control'>
-        <label htmlFor="gender">Gender:</label>
-        <select id="gender" name="gender" onChange={(event) => setPickedGender(event.target.value)}  ref={selectRef}>
+      <div className='form-group mt-3'>
+        <label htmlFor="gender">Gender</label>
+        <select id="gender" name="gender" className="form-control mt-1" onChange={(event) => setPickedGender(event.target.value)}  ref={selectRef}>
             <option>---</option>
             {Object.entries(genderChoices).map(([value, label]) => (
             <option key={value} value={value}>{label}</option>
@@ -108,9 +123,10 @@ const Register = () => {
         </select>
       </div>
 
-      <div className="form-control">
+      <div className="form-group mt-3">
         <label>Phone number</label>
-        <input type='text' 
+        <input type='text'
+               className="form-control mt-1" 
                placeholder="User name" 
                value={userName} 
                onChange={(e) => setUserName(e.target.value)}
@@ -119,18 +135,27 @@ const Register = () => {
                 />
       </div>
 
-            <div className="form-control">
+            <div className="form-group mt-3">
         <label>Age</label>
-        <input type='text' 
+        <input type='text'
+               className="form-control mt-1" 
                placeholder="User name" 
                value={age} 
                onChange={(e) => setAge(e.target.value)}
                maxLength={3}
                pattern="[0-9]*" 
                 />
-      </div>              
-      <input type='submit' value="Rejestruj" className="btn btn-block" />
+      </div>
+      <div className="d-grid gap-2 mt-4 mb-4">
+                        <button type="submit" className="btn btn-primary">
+                            Submit
+                        </button>
+                    </div>
+      {/* <input type='submit' value="Rejestruj" className="btn btn-block" />
+       */}
+      </div>
     </form>
+    </div>
   )
 }
 
