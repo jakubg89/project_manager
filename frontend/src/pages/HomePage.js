@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import AuthContext from '../context/AuthContext';
-
+import Headers from "../components/Headers"
 const HomePage = () => {
     const { user } = useContext(AuthContext);
     
@@ -8,7 +8,9 @@ const HomePage = () => {
 
     return (
         <div>
-            { user ? <p>Logged in</p> : 'DUPA'}
+            <Headers />
+            {/* { user ? <p>Logged in</p> : 'DUPA'} */}
+            Logged in, lista moich projektów cdsfsdfsdfsdf
         </div>
     )
 }

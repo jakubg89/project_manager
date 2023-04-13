@@ -80,14 +80,9 @@ const Register = () => {
         <div className="auth-form-content">
 
       <h3 className="auth-form-title">Sign up</h3>
-                    <div className="text-center">                    
-                        <span className="link-primary">
-                            <Link to="/login" >loguj</Link>
-                        </span>
+                    <div className="text-center">
+                      or go back to <Link to="/login" >login page</Link>                    
                     </div>
-
-
-
 
       <div className="form-group mt-3">
         <label>Email address</label>
