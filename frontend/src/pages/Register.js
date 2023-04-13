@@ -1,7 +1,8 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 
 const Register = () => {
+  const navigate = useNavigate();
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const [email, setEnamil] = useState('')
@@ -56,6 +57,8 @@ const Register = () => {
     setPickedGender('');
     selectRef.current.selectedIndex = 0;
 
+
+    navigate('/login')  
   }
 
   const getGender = async () => {
