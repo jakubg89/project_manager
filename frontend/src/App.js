@@ -2,12 +2,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import PrivateRoute from './utils/PrivateRoute'
 
-import Headers from "./components/Headers"
-
 import Login from './pages/Login'
 import Register from './pages/Register'
-// import HomePage from './pages/HomePage'
+
 import ProjectList from './pages/ProjectList'
+import CreateProject from './pages/CreateProject'
+import ProjectDetails from './pages/ProjectDetails'
 
 
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -24,6 +24,18 @@ function App() {
                           <ProjectList />
                         </PrivateRoute>
             } />
+            <Route path="/create-project" element={
+                        <PrivateRoute>
+                          <CreateProject />
+                        </PrivateRoute>
+            } />
+
+            <Route path="/project-details" element={
+                        <PrivateRoute>
+                          <ProjectDetails />
+                        </PrivateRoute>
+            } />
+
             <Route path="/login" element={<Login />}/>
             <Route path='/register' element={<Register />} />
 
