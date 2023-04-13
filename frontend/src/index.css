@@ -9,14 +9,15 @@
     --two:#A57E57;
     --three:#8D9095;
     --four:#785A5C ;
-    --five:#2B3A55;
+    --five:#2B3A55; 
 }
 
-/* #EDF0EC
+/* 
+#EDF0EC
 #A57E57
 #8D9095
 #785A5C 
-#2B3A55
+#2B3A55 rgb(43, 58, 85)
 */
 
 /* 
@@ -37,6 +38,9 @@ body {
 .app-container {
     /* background-color: rgb(224, 224, 224); */
     background-color: #2B3A55;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
   }
   
   .auth-form-container {
@@ -96,4 +100,53 @@ body {
 	border-color: var(--one) !important;
 	outline: 0 !important;
 	box-shadow: 5 1 1 .5rem rgba(62, 91, 134, 0.25) !important;
+}
+
+.nav-bar-container {
+  width: 100vw;
+  /* height: fit-content; */
+  background-color: var(--one);
+}
+
+.nav-bar-item {
+  background-color: var(--one) !important;
+}
+
+.nav-bar-item:hover {
+  background-color: rgba(43, 58, 85, 0.25) !important;
+}
+
+.nav-bar-item:after {
+  color: var(--five) !important;
+  background-color: var(--two) !important;
+}
+
+
+.dropdown-menu {
+	position: absolute;
+	z-index: 1000;
+	display: none;
+	/* min-width: 10rem; */
+	/* padding: .5rem 0; */
+	margin: 0;
+	font-size: 1rem;
+	color: var(--one) !important;
+	text-align: left;
+	list-style: none;
+	background-color: var(--one) !important;
+	background-clip: padding-box;
+	border: 0px solid rgba(0, 30, 126, 0.15) !important;
+  border-radius: 0px !important;
+}
+
+.dropdown-divider {
+	height: 0;
+	margin: .5rem 0;
+	overflow: hidden;
+	border-top: 1px solid rgba(0, 0, 0, 0.15)
+}
+
+.navbar {
+	padding-top: .14rem !important;
+	padding-bottom: .14rem !important;
 }
