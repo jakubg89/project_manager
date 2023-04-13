@@ -1,18 +1,96 @@
-import { FaTimes } from 'react-icons/fa'
 import { useState, useEffect } from "react"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useContext } from 'react'
 import AuthContext from '../context/AuthContext';
 
 import Headers from "../components/Headers"
 
+import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
+
+import { FaTimes, FaComments, FaRegEdit, FaArrowCircleRight } from 'react-icons/fa'
+
+
 const ProjectList = () => {
   let [projects, setProjects] = useState([]);
   let { authTokens, user } = useContext(AuthContext);
+  const [projectStatus, setProjectStatus] = useState([]);
 
-  useEffect(() => {  
-    fetchProjects();
-  }, []);
+  // Modal
+  const [show, setShow] = useState(false);
+  const [projectName, setProjectName] = useState(null);
+  const [projectId, setProjectId] = useState()
+  const handleClose = () => {
+    setProjectName('')
+    setProjectId()
+    setComment('')
+    setShow(false);
+  }
+
+  const handleShow = (proj, projectId) => {
+    setProjectName(proj);
+    setProjectId(projectId)
+    setShow(true);
+  }
+
+  // Form
+  const [comment, setComment] = useState('')
+  const navigate = useNavigate();
+
+  const onAddComment = (comment) => {
+    fetch('http://127.0.0.1:8000/api/user/register/', {
+      method: 'POST',
+      body: JSON.stringify(comment),
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer ' + String(authTokens.access)
+    },
+      credentials: 'include'
+    })
+    .then(response => {
+      console.log(response)
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+  }
+
+  const onSubmitComment = (e) => {
+    e.preventDefault()
+
+    if (!comment) {
+      alert('Place comment')
+      return
+    }
+    console.log(comment, projectId)
+    onAddComment({ 
+      content: comment,
+      project: projectId,
+      // user
+    })
+    navigate('/project-details', {
+      state: {
+        projectId: projectId,
+      }
+    })
+    setComment('')
+  }
+
+
+  const getProjectStatus = async () => {
+    let response = await fetch('http://127.0.0.1:8000/api/project_status/', {
+      method: 'GET',
+      headers:{
+        'Content-Type':'application/json',
+    }
+    })
+    console.log(response)
+    const data = await response.json();
+    setProjectStatus(data)
+  }
 
   const fetchProjects = async () => {
     let response = await fetch('http://127.0.0.1:8000/api/project/', {
@@ -24,12 +102,10 @@ const ProjectList = () => {
   })  
     const data = await response.json();
     setProjects(data)
-    // console.log(data);
   };
 
   const deleteProject = (id) => {
     setProjects(projects.filter((project) => project.id !== id))
-    // console.log(projects)
     fetch('http://127.0.0.1:8000/api/project/'+id, {
       method: 'DELETE',
       body: JSON.stringify(id),
@@ -48,23 +124,74 @@ const ProjectList = () => {
     })
   }
 
+  useEffect(() => {  
+    fetchProjects();
+    getProjectStatus()
+  }, []);
+
   return (
+    
     <div>
       <Headers />
+      <div>
+      <div className="project-container mt-5">
+          <div className='project-body'>
+          <Table hover  className="text-center">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Starting</th>
+      <th>End</th>
+      <th>Status</th>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody>
       {projects.map((project) => (
-        <div key={project.id} className="task">
-          <h3>
-            <Link to='/taskdetails' state={{ taskId: project.id, taskName: project.name }}>{project.name}</Link>
-            <FaTimes style={{color: 'red', cursor: 'pointer'}} onClick={() => deleteProject(project.id)}/>
-          </h3>
-          {/* <FaTimes style={{color: 'red', cursor: 'pointer'}} onClick={() => onDelete(task.id)}/> */}
-          <p>{project.about}</p>
-          <p>{project.number}</p>
-          {/* {JSON.stringify(task)} */}
-        </div>
-
-
+        <tr>
+        <td>{project.name}</td>
+        <td>{project.start_date}</td>
+        <td>{project.end_date}</td>
+        <td>{projectStatus.status[project.status]}</td>
+        <td>
+          <FaRegEdit className="table-icons"/>
+          <FaComments className="table-icons" onClick={() => handleShow(project.name, project.id)}/>
+          <Link to='/project-details' state={{ project }}>
+            <FaArrowCircleRight className="table-icons"/>
+          </Link>
+          {/* <FaTimes className="table-icons delete"/> */}
+          <FaTimes className="table-icons delete" onClick={() => deleteProject(project.id)}/>
+        </td>
+      </tr>  
       ))}
+      </tbody>
+      </Table>
+
+      </div></div>
+      </div>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{projectName}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form id="add-comment" onSubmit={onSubmitComment}>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea"
+            >
+              <Form.Label>Add comment {projectId}</Form.Label>
+              <Form.Control as="textarea" rows={3} value={comment} 
+               onChange={(e) => setComment(e.target.value)}/>
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button form="add-comment" type="submit" variant="primary">
+            Add comment
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   )
 }
