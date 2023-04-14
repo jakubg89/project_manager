@@ -41,8 +41,8 @@ class ProjectSerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=35, required=True)
     about = serializers.CharField(max_length=500)
     status = serializers.CharField(max_length=1, required=False)
-    start_date = serializers.DateTimeField()
-    end_date = serializers.DateTimeField()
+    start_date = serializers.DateTimeField(format="%Y-%m-%d")
+    end_date = serializers.DateTimeField(format="%Y-%m-%d")
     user_id = serializers.IntegerField(required=True)
 
     class Meta:

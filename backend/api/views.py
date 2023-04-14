@@ -70,13 +70,15 @@ class ProjectView(ModelViewSet):
     serializer_class = ProjectSerializer
     permission_classes = [
         IsAuthenticated,
+        # AllowAny
     ]
 
     def get_queryset(self):
         if self.action in ["list"]:
             self.queryset = Project.objects.filter(user=self.request.user)
         elif self.action in ["destroy", "retrieve", "update", "partial_update"]:
-            self.queryset = Project.objects.filter(id=self.request.data)
+            project_pk = self.kwargs.get('pk')
+            self.queryset = Project.objects.filter(id=project_pk)
         else:
             self.queryset = None
         return super().get_queryset()
