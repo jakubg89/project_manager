@@ -15,7 +15,7 @@ const CreateProject = () => {
 
 
   let { authTokens, user } = useContext(AuthContext);
-  console.log(user)
+
   const onAdd = (task) => {
     fetch('http://127.0.0.1:8000/api/project/', {
       method: 'POST',
@@ -59,14 +59,16 @@ const CreateProject = () => {
 
   return (
     <div>
-        <Headers />
-        <div className='auth-form-container'>
-            <form className="auth-form" onSubmit={onSubmit} name='createproject'>
+        <Headers />        <div>
+          <div className="project-container mt-5">
+            <div className='project-body'>
+
+            <form onSubmit={onSubmit} name='createproject'>
                 <div className="auth-form-content mt-2">
                 <h1 className="auth-form-title">Create project</h1>
 
       <div className="form-group mt-4">
-        <label>Name ...{user.user_id}</label>
+        <label>Name</label>
         <input type='text'
                className="form-control mt-1"  
                placeholder="Project name" 
@@ -95,7 +97,7 @@ const CreateProject = () => {
       </div>
 
         <div className="d-grid gap-2 mt-4 mb-4">
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="btn btn-success">
                         Save project
                     </button>
                 </div>
@@ -104,6 +106,8 @@ const CreateProject = () => {
     </form>
     </div>
     </div>
+    </div>
+        </div>
   )
 }
 
