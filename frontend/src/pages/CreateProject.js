@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import AuthContext from '../context/AuthContext';
 import Headers from '../components/Headers';
 
 const CreateProject = () => {
+  const navigate = useNavigate();
   const [taskName, setName] = useState('')
   const [about, setAbout] = useState('')
   const [someNumber, setSomeNumber] = useState('')
@@ -52,6 +54,7 @@ const CreateProject = () => {
     setName('')
     setAbout('')
     setSomeNumber('')
+    navigate('/')
   }
 
   return (
