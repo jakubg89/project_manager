@@ -35,6 +35,16 @@ const ProjectList = () => {
     setShow(true);
   }
 
+  // Modal delete warning
+  const [showDelete, setShowDelete] = useState(false);
+  const [ toDeleteId, setToDeleteId ] = useState('')
+  const handleCloseDelete = () => setShowDelete(false);
+  const handleShowDelete = (id) => {
+    setToDeleteId(id);
+    setShowDelete(true);
+  }
+
+
   // Form
   const [comment, setComment] = useState('')
   const navigate = useNavigate();
@@ -119,6 +129,7 @@ const ProjectList = () => {
         throw new Error('Network response was not ok');
       }
       else {
+        setShowDelete(false)
         return {}
       }
     })
@@ -156,11 +167,11 @@ const ProjectList = () => {
         <td>
           <FaRegEdit className="table-icons"/>
           <FaComments className="table-icons" onClick={() => handleShow(project.name, project.id)}/>
-          <Link to='/project-details' state={{ project }}>
+          <Link to='/project-details' state={{ projectId: project.id }}>
             <FaArrowCircleRight className="table-icons"/>
           </Link>
           {/* <FaTimes className="table-icons delete"/> */}
-          <FaTimes className="table-icons delete" onClick={() => deleteProject(project.id)}/>
+          <FaTimes className="table-icons delete" onClick={() => handleShowDelete(project.id)}/>
         </td>
       </tr>  
       ))}
@@ -189,6 +200,20 @@ const ProjectList = () => {
         <Modal.Footer>
           <Button form="add-comment" type="submit" variant="primary">
             Add comment
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      
+
+
+      <Modal show={showDelete} onHide={handleCloseDelete}>
+        <Modal.Header closeButton>
+          <Modal.Title>Warning</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>You're trying to delete this project!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={() => deleteProject(toDeleteId)}>
+            Delete project
           </Button>
         </Modal.Footer>
       </Modal>
