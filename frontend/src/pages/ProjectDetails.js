@@ -56,8 +56,17 @@ const ProjectDetails = () => {
     })
   }
 
+  const goToEdit = () => {
+    navigate('/edit-project', {
+      state: {
+        projectId: projectId,
+        projectStatus2: projectDetails.status,
+      }
+    })
+  }
+
 useEffect(() => {  
-    fetchProjectDetails();
+    fetchProjectDetails()
   }, []);
 
   return (
@@ -81,7 +90,7 @@ useEffect(() => {
                 <button type="submit" className="btn btn-danger w-100" onClick={() => handleShow(projectId)}>    
                     Delete
                 </button>
-                <button type="submit" className="btn btn-success w-100">
+                <button type="submit" className="btn btn-success w-100" onClick={() => goToEdit()}>
                     Edit
                 </button>
             </div>
@@ -94,7 +103,6 @@ useEffect(() => {
                 
             </div>
         </div>
-
       </div>
 
 
