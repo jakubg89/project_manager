@@ -4,6 +4,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import (
     User,
     Project,
+    Comment,
 )
 
 
@@ -48,3 +49,13 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = ['id', 'name', 'about', 'status', 'start_date', 'end_date', 'user_id']
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    user_id = serializers.IntegerField(required=True)
+    project_id = serializers.IntegerField(required=True)
+    content = serializers.CharField(max_length=500, style={'base_template': 'textarea.html'})
+
+    class Meta:
+        model = Comment
+        fields = ["id", "user_id", "content"]

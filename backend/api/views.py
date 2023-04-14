@@ -16,9 +16,10 @@ from .serializers import (
     MyTokenObtainPairSerializer,
     UserSerializer,
     ProjectSerializer,
+    CommentSerializer,
 )
 
-from .models import User, Project
+from .models import User, Project, Comment
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -70,7 +71,6 @@ class ProjectView(ModelViewSet):
     serializer_class = ProjectSerializer
     permission_classes = [
         IsAuthenticated,
-        # AllowAny
     ]
 
     def get_queryset(self):
@@ -89,4 +89,12 @@ class ProjectAssignedUserView(GenericAPIView, mixins.ListModelMixin):
 
 
 class CommentView(GenericAPIView, mixins.CreateModelMixin, mixins.ListModelMixin):
-    pass
+    serializer_class = CommentSerializer
+    queryset = Comment.objects.all()
+    permission_classes = [
+        # IsAuthenticated,
+        AllowAny
+    ]
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
