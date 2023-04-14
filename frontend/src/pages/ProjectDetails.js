@@ -80,7 +80,7 @@ useEffect(() => {
             <ul class="list-group list-group-flush">
               <li class="list-group-item">Started: {projectDetails.start_date}</li>
               <li class="list-group-item">Ends: {projectDetails.end_date}</li>
-              <li class="list-group-item">Created by: {projectDetails.user}</li>
+              <li class="list-group-item">Created by: {projectDetails.first_name} {projectDetails.last_name}</li>
               <li class="list-group-item">Status: {projectDetails.status}</li>
             </ul>
             <div className="d-flex justify-content-start gap-2 mt-4 mb-4">

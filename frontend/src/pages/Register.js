@@ -7,6 +7,8 @@ const Register = () => {
   const [password, setPassword] = useState('')
   const [email, setEnamil] = useState('')
   const [age, setAge] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
 
   const [pickedGender, setPickedGender] = useState('');
   const selectRef = useRef(null);
@@ -46,13 +48,17 @@ const Register = () => {
       password,
       email,
       gender: pickedGender,
-      age
+      age,
+      first_name: firstName,
+      last_name: lastName,
     })
 
     setUserName('')
     setPassword('')
     setEnamil('')
     setAge('')
+    setFirstName('')
+    setLastName('')
 
     setPickedGender('');
     selectRef.current.selectedIndex = 0;
@@ -86,6 +92,30 @@ const Register = () => {
                     <div className="text-center">
                       or go back to <Link to="/login" >login page</Link>                    
                     </div>
+
+      <div className="form-group mt-3">
+        <label>First name</label>
+        <input  type='text'
+                className="form-control mt-1" 
+                placeholder="First name" 
+                value={firstName} 
+                onChange={(e) => setFirstName(e.target.value)} 
+                pattern="[a-zA-Z0-9._@]*"
+                maxLength={40} 
+                />
+      </div>
+
+      <div className="form-group mt-3">
+        <label>Last name</label>
+        <input  type='text'
+                className="form-control mt-1" 
+                placeholder="Last name" 
+                value={lastName} 
+                onChange={(e) => setLastName(e.target.value)} 
+                pattern="[a-zA-Z0-9._@]*"
+                maxLength={40} 
+                />
+      </div>
 
       <div className="form-group mt-3">
         <label>Email address</label>

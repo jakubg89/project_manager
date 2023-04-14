@@ -26,9 +26,21 @@ class UserSerializer(serializers.ModelSerializer):
     gender = serializers.CharField(max_length=1, required=True)
     phone_number = serializers.CharField(max_length=20)
 
+    first_name = serializers.CharField(max_length=150, required=True)
+    last_name = serializers.CharField(max_length=150, required=True)
+
     class Meta:
         model = User
-        fields = ["id", "email", "password", "gender", "age", "phone_number"]
+        fields = [
+            "id",
+            "email",
+            "password",
+            "gender",
+            "age",
+            "phone_number",
+            "first_name",
+            "last_name",
+        ]
 
     def create(self, validated_data):
         password = validated_data.pop("password")

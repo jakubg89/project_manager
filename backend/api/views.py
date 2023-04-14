@@ -54,6 +54,7 @@ class UserView(ModelViewSet):
             self.permission_classes = [
                 AllowAny,
             ]
+            print(self.request.data)
         return super().get_permissions()
 
     def get_queryset(self):
