@@ -60,7 +60,7 @@ class Project(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.status = 'N'
+            self.status = "N"
         super().save(*args, **kwargs)
 
 
