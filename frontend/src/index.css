@@ -2,7 +2,7 @@
     --primary:  #8d9095;
     --info: #2b3a55;
     --success: #60a665;
-    --warning: #dd962d;
+    --warning: #dd962d !important;
     --danger: #f44336;
 
     --one:#EDF0EC;

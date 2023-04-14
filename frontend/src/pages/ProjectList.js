@@ -15,7 +15,7 @@ import { FaTimes, FaComments, FaRegEdit, FaArrowCircleRight } from 'react-icons/
 
 const ProjectList = () => {
   let [projects, setProjects] = useState([]);
-  let { authTokens, user } = useContext(AuthContext);
+  let { authTokens } = useContext(AuthContext);
   const [projectStatus, setProjectStatus] = useState([]);
 
   // Modal
@@ -135,8 +135,8 @@ const ProjectList = () => {
     })
   }
 
-  useEffect(() => {  
-    fetchProjects();
+  useEffect(() => {
+    fetchProjects()
     getProjectStatus()
   }, []);
 
@@ -159,13 +159,16 @@ const ProjectList = () => {
   </thead>
   <tbody>
       {projects.map((project) => (
-        <tr>
+        <tr key={project.id}>
         <td>{project.name}</td>
         <td>{project.start_date}</td>
         <td>{project.end_date}</td>
         <td>{projectStatus.status[project.status]}</td>
         <td>
-          <FaRegEdit className="table-icons"/>
+          <Link to='/edit-project' state={{ projectId: project.id, projectStatus2: String(project.status) }}>
+          {/* <Link to='/edit-project' state={{ project1: project, projectStatus: projectStatus }}> */}
+            <FaRegEdit className="table-icons"/>
+          </Link>
           <FaComments className="table-icons" onClick={() => handleShow(project.name, project.id)}/>
           <Link to='/project-details' state={{ projectId: project.id }}>
             <FaArrowCircleRight className="table-icons"/>
