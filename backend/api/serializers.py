@@ -55,7 +55,8 @@ class CommentSerializer(serializers.ModelSerializer):
     user_id = serializers.IntegerField(required=True)
     project_id = serializers.IntegerField(required=True)
     content = serializers.CharField(max_length=500, style={'base_template': 'textarea.html'})
+    date_added = serializers.DateTimeField(format="%Y-%m-%d %H:%M", required=False)
 
     class Meta:
         model = Comment
-        fields = ["id", "user_id", "content"]
+        fields = ["id", "user_id", "project_id", "content", "date_added"]

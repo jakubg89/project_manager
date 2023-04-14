@@ -17,12 +17,13 @@ from .views import (
 router = DefaultRouter()
 router.register(r'project', ProjectView, basename="project")
 router.register(r'user', UserView, basename="user")
+router.register(r'comment', CommentView, basename="comment")
 
 urlpatterns = [
     path("gender/", GenderChoices.as_view(), name="gender_choice"),
     path("project_status/", ProjectChoices.as_view(), name="status_choice"),
 
-    path("comment/", CommentView.as_view(), name="comment_view"),
+    # path("comment/", CommentView.as_view(), name="comment_view"),
     # path("user/register/", UserView.as_view({'post': 'create'}), name='sign_in'),
 
     # Tokens
