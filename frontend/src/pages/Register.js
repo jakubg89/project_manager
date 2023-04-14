@@ -15,7 +15,7 @@ const Register = () => {
 
 
   const onAdd = (user) => {
-    fetch('http://127.0.0.1:8000/api/user/register/', {
+    fetch('http://127.0.0.1:8000/api/user/', {
       method: 'POST',
       body: JSON.stringify(user),
       headers:{

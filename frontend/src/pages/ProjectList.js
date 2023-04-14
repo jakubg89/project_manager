@@ -15,7 +15,7 @@ import { FaTimes, FaComments, FaRegEdit, FaArrowCircleRight } from 'react-icons/
 
 const ProjectList = () => {
   let [projects, setProjects] = useState([]);
-  let { authTokens } = useContext(AuthContext);
+  let { authTokens, user } = useContext(AuthContext);
   const [projectStatus, setProjectStatus] = useState([]);
 
   // Modal
@@ -50,7 +50,7 @@ const ProjectList = () => {
   const navigate = useNavigate();
 
   const onAddComment = (comment) => {
-    fetch('http://127.0.0.1:8000/api/user/register/', {
+    fetch('http://127.0.0.1:8000/api/comment/', {
       method: 'POST',
       body: JSON.stringify(comment),
       headers:{
@@ -78,8 +78,8 @@ const ProjectList = () => {
     console.log(comment, projectId)
     onAddComment({ 
       content: comment,
-      project: projectId,
-      // user
+      project_id: projectId,
+      user_id: user.user_id,
     })
     navigate('/project-details', {
       state: {

@@ -4,9 +4,8 @@ from rest_framework.permissions import (
 )
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework import mixins
-from rest_framework.generics import GenericAPIView
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -16,9 +15,10 @@ from .serializers import (
     MyTokenObtainPairSerializer,
     UserSerializer,
     ProjectSerializer,
+    CommentSerializer,
 )
 
-from .models import User, Project
+from .models import User, Project, Comment
 
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -70,7 +70,6 @@ class ProjectView(ModelViewSet):
     serializer_class = ProjectSerializer
     permission_classes = [
         IsAuthenticated,
-        # AllowAny
     ]
 
     def get_queryset(self):
@@ -84,9 +83,20 @@ class ProjectView(ModelViewSet):
         return super().get_queryset()
 
 
-class ProjectAssignedUserView(GenericAPIView, mixins.ListModelMixin):
-    pass
+# class ProjectAssignedUserView(GenericAPIView, mixins.ListModelMixin):
+#     pass
 
 
-class CommentView(GenericAPIView, mixins.CreateModelMixin, mixins.ListModelMixin):
-    pass
+class CommentView(GenericViewSet, mixins.CreateModelMixin, mixins.ListModelMixin):
+    serializer_class = CommentSerializer
+    permission_classes = [
+        IsAuthenticated,
+        # AllowAny
+    ]
+
+    def get_queryset(self):
+        if self.action in ['list']:
+            self.queryset = Comment.objects.all()
+        else:
+            self.queryset = None
+        return super().get_queryset()
