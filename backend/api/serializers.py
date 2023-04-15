@@ -72,13 +72,22 @@ class ProjectSerializer(serializers.ModelSerializer):
             "user_id",
             "first_name",
             "last_name",
+            "users",
         ]
+        depth = 1
 
     def get_first_name(self, obj):
         return obj.user.first_name
 
     def get_last_name(self, obj):
         return obj.user.last_name
+
+    def create(self, validated_data):
+        users_data = validated_data.pop("users")
+        project = Project.objects.create(**validated_data)
+        for user_data in users_data:
+            project.users.add(user_data)
+        return project
 
 
 class CommentSerializer(serializers.ModelSerializer):

@@ -5,7 +5,7 @@ from rest_framework.permissions import (
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
-from rest_framework import mixins
+from rest_framework import mixins, status
 from rest_framework.decorators import action
 
 from rest_framework_simplejwt.views import (
@@ -60,7 +60,7 @@ class UserView(ModelViewSet):
 
     def get_queryset(self):
         if self.action in ["list"]:
-            self.queryset = User.objects.filter(is_staff=0)
+            self.queryset = User.objects.filter(is_superuser=0)
         elif self.action in ["destroy", "retrieve", "update", "partial_update"]:
             self.queryset = User.objects.filter(id=self.request.user)
         else:
@@ -72,6 +72,7 @@ class ProjectView(ModelViewSet):
     serializer_class = ProjectSerializer
     permission_classes = [
         IsAuthenticated,
+        # AllowAny
     ]
 
     def get_queryset(self):
@@ -84,9 +85,16 @@ class ProjectView(ModelViewSet):
             self.queryset = None
         return super().get_queryset()
 
-
-# class ProjectAssignedUserView(GenericAPIView, mixins.ListModelMixin):
-#     pass
+    def create(self, request, *args, **kwargs):
+        users_list = request.data["users"]
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(users=users_list)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )
 
 
 class CommentView(GenericViewSet, mixins.CreateModelMixin, mixins.ListModelMixin):
