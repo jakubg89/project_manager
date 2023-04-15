@@ -1,26 +1,42 @@
 import { useLocation, useNavigate } from 'react-router-dom'
-import Headers from '../components/Headers'
 import { useContext, useState, useEffect } from 'react'
+
+// Components
+import Headers from '../components/Headers'
+
+// Context
 import AuthContext from '../context/AuthContext';
+
+// Bootstrap
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { Badge } from 'react-bootstrap';
+import Card from 'react-bootstrap/Card';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 
 const ProjectDetails = () => {
+  const navigate = useNavigate();
   const location = useLocation()
   const { projectId } = location.state
+
   let { authTokens } = useContext(AuthContext);
-  const navigate = useNavigate();
-  const [projectDetails, setProjectDetails] = useState([])
-  const [projectComments, setProjectComments] = useState([])
+
 
   // Modal
   const [show, setShow] = useState(false);
   const [ toDeleteId, setToDeleteId ] = useState('')
+
   const handleClose = () => setShow(false);
   const handleShow = (id) => {
     setToDeleteId(id);
     setShow(true);
   }
+
+  // Project details
+  const [projectDetails, setProjectDetails] = useState([])
+  const [projectUsers, setProjectUsers] = useState([])
 
   const fetchProjectDetails = async () => {
     let response = await fetch('http://127.0.0.1:8000/api/project/'+String(projectId), {
@@ -35,9 +51,13 @@ const ProjectDetails = () => {
 
     if (data) {
         setProjectDetails(data);
+        setProjectUsers(data.users);
       }
   };
   
+  // Project comments
+  const [projectComments, setProjectComments] = useState([])
+
   const fetchProjectComments = async () => {
     let response = await fetch('http://127.0.0.1:8000/api/comment/'+String(projectId)+'/details/', {
       method:'GET',
@@ -54,7 +74,7 @@ const ProjectDetails = () => {
       }
   };
 
-
+  // Delete project
   const deleteProject = (id) => {
     fetch('http://127.0.0.1:8000/api/project/'+id, {
       method: 'DELETE',
@@ -74,6 +94,7 @@ const ProjectDetails = () => {
     })
   }
 
+  // Navigation
   const goToEdit = () => {
     navigate('/edit-project', {
       state: {
@@ -83,8 +104,8 @@ const ProjectDetails = () => {
     })
   }
 
-useEffect(() => {  
-    fetchProjectDetails()
+useEffect(() => {
+    fetchProjectDetails()  
     fetchProjectComments()
   }, []);
 
@@ -101,6 +122,15 @@ useEffect(() => {
               <li class="list-group-item">Ends: {projectDetails.end_date}</li>
               <li class="list-group-item">Created by: {projectDetails.first_name} {projectDetails.last_name}</li>
               <li class="list-group-item">Status: {projectDetails.status}</li>
+              <li class="list-group-item">
+                {projectUsers.map((user) => (
+                  <>      
+                    <Badge bg='success'>
+                      {user.email}
+                    </Badge>{' '}
+                  </>
+                ))}
+              </li>
             </ul>
             <div className="d-flex justify-content-start gap-2 mt-4 mb-4">
                 <button type="submit" className="btn btn-primary w-100" onClick={() => navigate(-1)}>
@@ -117,18 +147,34 @@ useEffect(() => {
           
         </div>
 
-        <div className="project-container mt-3">
-            <div className='project-body'>
+        {/* if  */}
+        {projectComments.length > 0 ? 
+          <div className="project-container mt-3">
+            <div className='project-body'>    
             {projectComments.map((comment) => (
               <>
-                <p>{comment.project_id} - {comment.content}</p>
-                <small>{comment.first_name} {comment.last_name}</small>
+                <Card className="mt-2" border={projectDetails.user === comment.user ? "success" : ""} style={{ width: 'w-100' }}>
+                  <Card.Header className='justify-content-between'>
+                    <Row>
+                        <Col className='text-start'>{comment.first_name} {comment.last_name} Name Lastname</Col>
+                        <Col className='text-end'><small className='comment-date'>{comment.date_added}</small></Col>
+                    </Row>
+                  </Card.Header>
+        
+                <Card.Body>
+                  <Card.Text>
+                    {comment.content}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
               </>
             ))}
             </div>
-        </div>
+          </div>
+         : ''}
+         {/* end if */}
+        
       </div>
-
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
