@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
+
 import { FaTimes, FaComments, FaRegEdit, FaArrowCircleRight } from 'react-icons/fa'
 
 
@@ -43,7 +44,6 @@ const ProjectList = () => {
     setToDeleteId(id);
     setShowDelete(true);
   }
-
 
   // Form
   const [comment, setComment] = useState('')
@@ -163,7 +163,7 @@ const ProjectList = () => {
         <td>{project.name}</td>
         <td>{project.start_date}</td>
         <td>{project.end_date}</td>
-        <td>{projectStatus.status[project.status]}</td>
+        {/* <td>{projectStatus.status[project.status]}</td> */}
         <td>
           <Link to='/edit-project' state={{ projectId: project.id, projectStatus2: String(project.status) }}>
           {/* <Link to='/edit-project' state={{ project1: project, projectStatus: projectStatus }}> */}

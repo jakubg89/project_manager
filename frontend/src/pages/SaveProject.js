@@ -13,7 +13,6 @@ const SaveProject = () => {
 
 
   const onUpdate = (task) => {
-    console.log('dupa -'+projectId)
     fetch('http://127.0.0.1:8000/api/project/'+projectId+'/', {
       method: 'PATCH',
       body: JSON.stringify(task),
@@ -24,7 +23,6 @@ const SaveProject = () => {
       credentials: 'include'
     })
     .then(response => {
-      console.log(response)
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

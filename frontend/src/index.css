@@ -1,6 +1,6 @@
 :root{
     --primary:  #8d9095;
-    --info: #2b3a55;
+    --info: #2b3a55 !important;
     --success: #60a665;
     --warning: #dd962d !important;
     --danger: #f44336;
@@ -34,7 +34,6 @@ body {
     font-family: 'Source Sans Pro', sans-serif;
     background-color: #2B3A55 !important;
 }
-
 
 .app-container {
     /* background-color: rgb(224, 224, 224); */
@@ -203,4 +202,9 @@ body {
 
 .list-group-item {
   background-color: var(--one) !important;
+}
+
+.comment-date {
+  font-size: 12px !important;
+  color: var(--four) !important;
 }
