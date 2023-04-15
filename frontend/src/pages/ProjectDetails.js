@@ -11,6 +11,7 @@ const ProjectDetails = () => {
   let { authTokens } = useContext(AuthContext);
   const navigate = useNavigate();
   const [projectDetails, setProjectDetails] = useState([])
+  const [projectComments, setProjectComments] = useState([])
 
   // Modal
   const [show, setShow] = useState(false);
@@ -36,6 +37,23 @@ const ProjectDetails = () => {
         setProjectDetails(data);
       }
   };
+  
+  const fetchProjectComments = async () => {
+    let response = await fetch('http://127.0.0.1:8000/api/comment/'+String(projectId)+'/details/', {
+      method:'GET',
+      headers:{
+          'Content-Type':'application/json',
+          'Authorization':'Bearer ' + String(authTokens.access)
+      },
+      credentials: 'include'
+  })
+    const data = await response.json();
+    console.log('http://127.0.0.1:8000/api/comment/'+String(projectId)+'/details/')
+    if (data) {
+        setProjectComments(data);
+      }
+  };
+
 
   const deleteProject = (id) => {
     fetch('http://127.0.0.1:8000/api/project/'+id, {
@@ -67,6 +85,7 @@ const ProjectDetails = () => {
 
 useEffect(() => {  
     fetchProjectDetails()
+    fetchProjectComments()
   }, []);
 
   return (
@@ -100,7 +119,12 @@ useEffect(() => {
 
         <div className="project-container mt-3">
             <div className='project-body'>
-                
+            {projectComments.map((comment) => (
+              <>
+                <p>{comment.project_id} - {comment.content}</p>
+                <small>{comment.first_name} {comment.last_name}</small>
+              </>
+            ))}
             </div>
         </div>
       </div>

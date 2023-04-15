@@ -89,6 +89,23 @@ class CommentSerializer(serializers.ModelSerializer):
     )
     date_added = serializers.DateTimeField(format="%Y-%m-%d %H:%M", required=False)
 
+    first_name = serializers.SerializerMethodField()
+    last_name = serializers.SerializerMethodField()
+
     class Meta:
         model = Comment
-        fields = ["id", "user_id", "project_id", "content", "date_added"]
+        fields = [
+            "id",
+            "user_id",
+            "project_id",
+            "content",
+            "date_added",
+            "first_name",
+            "last_name",
+        ]
+
+    def get_first_name(self, obj):
+        return obj.user.first_name
+
+    def get_last_name(self, obj):
+        return obj.user.last_name

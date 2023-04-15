@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework import mixins
+from rest_framework.decorators import action
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -77,7 +78,7 @@ class ProjectView(ModelViewSet):
         if self.action in ["list"]:
             self.queryset = Project.objects.filter(user=self.request.user)
         elif self.action in ["destroy", "retrieve", "update", "partial_update"]:
-            project_pk = self.kwargs.get('pk')
+            project_pk = self.kwargs.get("pk")
             self.queryset = Project.objects.filter(id=project_pk)
         else:
             self.queryset = None
@@ -95,9 +96,8 @@ class CommentView(GenericViewSet, mixins.CreateModelMixin, mixins.ListModelMixin
         # AllowAny
     ]
 
-    def get_queryset(self):
-        if self.action in ['list']:
-            self.queryset = Comment.objects.all()
-        else:
-            self.queryset = None
-        return super().get_queryset()
+    @action(detail=True, methods=["get"], url_path="details", url_name="details")
+    def project_comments(self, request, pk=None):
+        self.queryset = Comment.objects.filter(project_id=pk).order_by("-date_added")
+        serializer = self.get_serializer(self.queryset, many=True)
+        return Response(serializer.data)
