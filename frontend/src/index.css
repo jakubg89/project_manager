@@ -1,6 +1,6 @@
 :root{
     --primary:  #8d9095;
-    --info: #2b3a55;
+    --info: #2b3a55 !important;
     --success: #60a665;
     --warning: #dd962d !important;
     --danger: #f44336;
@@ -35,9 +35,7 @@ body {
     background-color: #2B3A55 !important;
 }
 
-
 .app-container {
-    /* background-color: rgb(224, 224, 224); */
     background-color: #2B3A55;
     display: flex;
     width: 100vw;
@@ -80,11 +78,6 @@ body {
     color: rgb(34, 34, 34);
   }
 
-
-/* .btn-primary {
-    background-color: #8d9095 !important;
-} */
-
 .btn-primary,
 .btn-primary:active,
 .btn-primary:visited,
@@ -105,9 +98,7 @@ body {
 
 .nav-bar-container {
   width: 100vw;
-  /* height: fit-content; */
   background-color: var(--one);
-  /* box-shadow: rgba(61, 61, 61, 0.637) 1px 1px 10px; */
 }
 
 .nav-bar-item {
@@ -128,8 +119,6 @@ body {
 	position: absolute;
 	z-index: 1000;
 	display: none;
-	/* min-width: 10rem; */
-	/* padding: .5rem 0; */
 	margin: 0;
 	font-size: 1rem;
 	color: var(--one) !important;
@@ -153,8 +142,6 @@ body {
 	padding-bottom: .14rem !important;
 }
 
-
-/* Project container */
 .project-container {
   display: flex;
   justify-content: center;
@@ -173,11 +160,6 @@ body {
   padding-left: 5%;
   padding-right: 5%;
 }
-/* 
-.project-body {
-  padding-left: 8%;
-  padding-right: 8%;
-} */
 
 .project-title {
   text-align: left;
@@ -203,4 +185,9 @@ body {
 
 .list-group-item {
   background-color: var(--one) !important;
+}
+
+.comment-date {
+  font-size: 12px !important;
+  color: var(--four) !important;
 }
