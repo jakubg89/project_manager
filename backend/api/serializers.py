@@ -23,6 +23,9 @@ class UserSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(max_length=150, required=True)
     last_name = serializers.CharField(max_length=150, required=True)
 
+    first_name = serializers.CharField(max_length=150, required=True)
+    last_name = serializers.CharField(max_length=150, required=True)
+
     class Meta:
         model = User
         fields = [

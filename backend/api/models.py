@@ -56,3 +56,4 @@ class Project(models.Model):
     end_date = models.DateTimeField(blank=False, null=True)
     user = models.ForeignKey("User", related_name="user", on_delete=models.CASCADE)
     users = models.ManyToManyField(User, related_name="projects")
+

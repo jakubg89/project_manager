@@ -81,6 +81,16 @@ class ProjectView(ModelViewSet):
             queryset = None
         return queryset
 
+    def create(self, request, *args, **kwargs):
+        users_list = request.data["users"]
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(users=users_list)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )
 
     def create(self, request, *args, **kwargs):
         users_list = request.data["users"]
@@ -93,6 +103,13 @@ class ProjectView(ModelViewSet):
             serializer.data, status=status.HTTP_201_CREATED, headers=headers
         )
 
+
+class CommentView(GenericViewSet, mixins.CreateModelMixin, mixins.ListModelMixin):
+    serializer_class = CommentSerializer
+    permission_classes = [
+        IsAuthenticated,
+        # AllowAny
+    ]
 
 class CommentView(GenericViewSet, mixins.CreateModelMixin, mixins.ListModelMixin):
     serializer_class = CommentSerializer
