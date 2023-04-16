@@ -6,7 +6,7 @@ import AuthContext from '../context/AuthContext';
 
 const SaveProject = () => {
   const location = useLocation()
-  const { projectName, projectAbout, projectStatus, projectStartDate, projectEndDate, projectId } = location.state
+  const { projectName, projectAbout, projectStatus, projectStartDate, projectEndDate, projectId, projectStatusData } = location.state
   let { authTokens } = useContext(AuthContext);
   const navigate = useNavigate();
 //   const [projectDetails, setProjectDetails] = useState([])
@@ -58,7 +58,8 @@ useEffect(() => {
                 <li class="list-group-item">Started: {projectStartDate}</li>
               <li class="list-group-item">Ends: {projectEndDate}</li>
               {/*<li class="list-group-item">Created by: {projectDetails.user}</li>*/}
-              <li class="list-group-item">Status: {projectStatus}</li> 
+              <li class="list-group-item">Status: {projectStatusData[projectStatus]}
+                            </li> 
             </ul>
             <div className="d-flex justify-content-start gap-2 mt-4 mb-4">
                 <button type="submit" className="btn btn-primary w-100" onClick={() => navigate(-1)}>

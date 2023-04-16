@@ -163,14 +163,14 @@ const ProjectList = () => {
         <td>{project.name}</td>
         <td>{project.start_date}</td>
         <td>{project.end_date}</td>
-        {/* <td>{projectStatus.status[project.status]}</td> */}
+        <td>{projectStatus.status[project.status]}</td>
         <td>
           <Link to='/edit-project' state={{ projectId: project.id, projectStatus2: String(project.status) }}>
           {/* <Link to='/edit-project' state={{ project1: project, projectStatus: projectStatus }}> */}
             <FaRegEdit className="table-icons"/>
           </Link>
           <FaComments className="table-icons" onClick={() => handleShow(project.name, project.id)}/>
-          <Link to='/project-details' state={{ projectId: project.id }}>
+          <Link to='/project-details' state={{ projectId: project.id, projectStatsText: projectStatus.status[project.status] }}>
             <FaArrowCircleRight className="table-icons"/>
           </Link>
           {/* <FaTimes className="table-icons delete"/> */}
@@ -194,7 +194,7 @@ const ProjectList = () => {
               className="mb-3"
               controlId="exampleForm.ControlTextarea"
             >
-              <Form.Label>Add comment {projectId}</Form.Label>
+              <Form.Label>Add comment </Form.Label>
               <Form.Control as="textarea" rows={3} value={comment} 
                onChange={(e) => setComment(e.target.value)}/>
             </Form.Group>

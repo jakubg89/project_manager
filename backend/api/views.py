@@ -62,7 +62,7 @@ class UserView(ModelViewSet):
         if self.action in ["list"]:
             self.queryset = User.objects.filter(is_superuser=0)
         elif self.action in ["destroy", "retrieve", "update", "partial_update"]:
-            self.queryset = User.objects.filter(id=self.request.user)
+            self.queryset = User.objects.filter(id=self.request.user.pk)
         else:
             self.queryset = None
         return super().get_queryset()

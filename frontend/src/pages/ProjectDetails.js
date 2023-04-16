@@ -15,13 +15,12 @@ import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-
 const ProjectDetails = () => {
   const navigate = useNavigate();
   const location = useLocation()
-  const { projectId } = location.state
+  const { projectId, projectStatsText } = location.state
 
-  let { authTokens } = useContext(AuthContext);
+  let { authTokens, user } = useContext(AuthContext);
 
 
   // Modal
@@ -121,7 +120,7 @@ useEffect(() => {
               <li class="list-group-item">Started: {projectDetails.start_date}</li>
               <li class="list-group-item">Ends: {projectDetails.end_date}</li>
               <li class="list-group-item">Created by: {projectDetails.first_name} {projectDetails.last_name}</li>
-              <li class="list-group-item">Status: {projectDetails.status}</li>
+              <li class="list-group-item">Status: {projectStatsText} </li>
               <li class="list-group-item">
                 {projectUsers.map((user) => (
                   <>      
@@ -156,7 +155,7 @@ useEffect(() => {
                 <Card className="mt-2" border={projectDetails.user === comment.user ? "success" : ""} style={{ width: 'w-100' }}>
                   <Card.Header className='justify-content-between'>
                     <Row>
-                        <Col className='text-start'>{comment.first_name} {comment.last_name} Name Lastname</Col>
+                        <Col className='text-start'>{comment.first_name} {comment.last_name}</Col>
                         <Col className='text-end'><small className='comment-date'>{comment.date_added}</small></Col>
                     </Row>
                   </Card.Header>

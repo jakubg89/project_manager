@@ -12,7 +12,7 @@ const EditProject = () => {
     const [statusForDisplay, setStatusForDisplay] = useState('');
     const selectRef = useRef(null);
     const [pickedStatus, setPickedStatus] = useState('');
-
+    const handleFocus = (e) => e.target.select();
 
     let { authTokens, user } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -67,6 +67,7 @@ const EditProject = () => {
               projectStartDate: e.target.startDate.value,
               projectEndDate: e.target.endDate.value,
               projectId: projectId,
+              projectStatusData: projectStatus,
             }
           })
     }
@@ -99,6 +100,7 @@ const EditProject = () => {
                           : projectDetails && projectDetails.name
                       }
                       onChange={(e) => setProjectName(e.target.value)}
+                      onFocus={handleFocus}
                     />
                   </div>
       
@@ -112,6 +114,7 @@ const EditProject = () => {
                       placeholder="Describe project"
                       value={about ? about : projectDetails && projectDetails.about}
                       onChange={(e) => setAbout(e.target.value)}
+                      onFocus={handleFocus}
                     />
                   </div>
       
