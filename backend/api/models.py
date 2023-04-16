@@ -57,7 +57,3 @@ class Project(models.Model):
     user = models.ForeignKey("User", related_name="user", on_delete=models.CASCADE)
     users = models.ManyToManyField(User, related_name="projects")
 
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.status = "N"
-        super().save(*args, **kwargs)

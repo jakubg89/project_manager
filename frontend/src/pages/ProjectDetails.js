@@ -152,7 +152,7 @@ useEffect(() => {
             <div className='project-body'>    
             {projectComments.map((comment) => (
               <>
-                <Card className="mt-2" border={projectDetails.user === comment.user ? "success" : ""} style={{ width: 'w-100' }}>
+                <Card className="mt-2" border={projectDetails.user_id === comment.user_id ? "success" : ""} style={{ width: 'w-100' }}>
                   <Card.Header className='justify-content-between'>
                     <Row>
                         <Col className='text-start'>{comment.first_name} {comment.last_name}</Col>

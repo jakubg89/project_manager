@@ -19,12 +19,9 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(max_length=50, required=True)
-    email = serializers.EmailField(required=True)
 
-    age = serializers.IntegerField(required=True)
-    gender = serializers.CharField(max_length=1, required=True)
-    phone_number = serializers.CharField(max_length=20)
+    first_name = serializers.CharField(max_length=150, required=True)
+    last_name = serializers.CharField(max_length=150, required=True)
 
     first_name = serializers.CharField(max_length=150, required=True)
     last_name = serializers.CharField(max_length=150, required=True)
@@ -51,9 +48,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(max_length=35, required=True)
-    about = serializers.CharField(max_length=500)
-    status = serializers.CharField(max_length=1, required=False)
     start_date = serializers.DateTimeField(format="%Y-%m-%d")
     end_date = serializers.DateTimeField(format="%Y-%m-%d")
     user_id = serializers.IntegerField(required=True)
