@@ -81,6 +81,7 @@ class ProjectView(ModelViewSet):
             queryset = None
         return queryset
 
+
     def create(self, request, *args, **kwargs):
         users_list = request.data["users"]
         serializer = self.get_serializer(data=request.data)
