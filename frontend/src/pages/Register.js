@@ -196,7 +196,7 @@ const Register = () => {
         <label>Age<small style={{ color: "red"}}>*</small></label>
         <input type='text'
                className="form-control mt-1" 
-               placeholder="User name" 
+               placeholder="Your age" 
                value={age} 
                onChange={(e) => setAge(e.target.value)}
                maxLength={3}
