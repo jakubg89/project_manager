@@ -36,7 +36,6 @@ body {
 }
 
 .app-container {
-    /* background-color: rgb(224, 224, 224); */
     background-color: #2B3A55;
     display: flex;
     width: 100vw;
@@ -79,11 +78,6 @@ body {
     color: rgb(34, 34, 34);
   }
 
-
-/* .btn-primary {
-    background-color: #8d9095 !important;
-} */
-
 .btn-primary,
 .btn-primary:active,
 .btn-primary:visited,
@@ -104,9 +98,7 @@ body {
 
 .nav-bar-container {
   width: 100vw;
-  /* height: fit-content; */
   background-color: var(--one);
-  /* box-shadow: rgba(61, 61, 61, 0.637) 1px 1px 10px; */
 }
 
 .nav-bar-item {
@@ -127,8 +119,6 @@ body {
 	position: absolute;
 	z-index: 1000;
 	display: none;
-	/* min-width: 10rem; */
-	/* padding: .5rem 0; */
 	margin: 0;
 	font-size: 1rem;
 	color: var(--one) !important;
@@ -152,8 +142,6 @@ body {
 	padding-bottom: .14rem !important;
 }
 
-
-/* Project container */
 .project-container {
   display: flex;
   justify-content: center;
@@ -172,11 +160,6 @@ body {
   padding-left: 5%;
   padding-right: 5%;
 }
-/* 
-.project-body {
-  padding-left: 8%;
-  padding-right: 8%;
-} */
 
 .project-title {
   text-align: left;

@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react'
-import { json, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Select from 'react-select'
 
 
@@ -17,8 +17,6 @@ const CreateProject = () => {
 
   // User list
   const [userList, setUserList] = useState("")
-  const options = []
-
   const getUserList = async () => {
     let response = await fetch('http://127.0.0.1:8000/api/user/', {
       method: 'GET',
@@ -28,15 +26,13 @@ const CreateProject = () => {
     },
     credentials: 'include'
     })
-    console.log(response)
+
     const data = await response.json();
-    // setUserList(data)
     const options = []
     for (const user of data) {
       options.push({ value: user.id, label: user.email });
     }
     setUserList(options)
-    // console.log(options);
   }
 
   // Create project
@@ -51,7 +47,6 @@ const CreateProject = () => {
       credentials: 'include'
     })
     .then(response => {
-      console.log(response)
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -84,7 +79,6 @@ const CreateProject = () => {
 
 
     const x =  Array.from(e.target.asignedUsers).map(option => option.value)
-    const values = x.map(x => parseInt(x))
 
     if (x.length === 0) {
       const jsonData = JSON.stringify(e.target.asignedUsers.value)
@@ -100,7 +94,6 @@ const CreateProject = () => {
 
     }
     else {
-      const jsonData = JSON.stringify(x);
       onAdd({ 
         name: taskName, 
         about: about, 

@@ -89,7 +89,6 @@ const ProjectList = () => {
     setComment('')
   }
 
-
   const getProjectStatus = async () => {
     let response = await fetch('http://127.0.0.1:8000/api/project_status/', {
       method: 'GET',
@@ -166,14 +165,12 @@ const ProjectList = () => {
         <td>{projectStatus.status[project.status]}</td>
         <td>
           <Link to='/edit-project' state={{ projectId: project.id, projectStatus2: String(project.status) }}>
-          {/* <Link to='/edit-project' state={{ project1: project, projectStatus: projectStatus }}> */}
             <FaRegEdit className="table-icons"/>
           </Link>
           <FaComments className="table-icons" onClick={() => handleShow(project.name, project.id)}/>
           <Link to='/project-details' state={{ projectId: project.id, projectStatsText: projectStatus.status[project.status] }}>
             <FaArrowCircleRight className="table-icons"/>
           </Link>
-          {/* <FaTimes className="table-icons delete"/> */}
           <FaTimes className="table-icons delete" onClick={() => handleShowDelete(project.id)}/>
         </td>
       </tr>  
@@ -207,8 +204,6 @@ const ProjectList = () => {
         </Modal.Footer>
       </Modal>
       
-
-
       <Modal show={showDelete} onHide={handleCloseDelete}>
         <Modal.Header closeButton>
           <Modal.Title>Warning</Modal.Title>

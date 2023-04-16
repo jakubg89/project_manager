@@ -22,7 +22,6 @@ const Register = () => {
       body: JSON.stringify(user),
       headers:{
         'Content-Type':'application/json'
-        // 'Authorization':'Bearer ' + String(authTokens.access)
     },
       credentials: 'include'
     })
@@ -65,7 +64,7 @@ const Register = () => {
 
 
     let isPassValid = false
-    // if (password !== '') {
+
       if (password.length < 8 || !/\d/.test(password) || !/[\W_]/.test(password)) {
         alert('Password must be at least 8 characters long and contain at least one digit and one special character.');
         isPassValid = false
@@ -73,7 +72,6 @@ const Register = () => {
       else {
         isPassValid = true
       }
-    // }
 
     if (isPassValid) {
       onAdd({ 
@@ -158,7 +156,6 @@ const Register = () => {
                 placeholder="Enter email" 
                 value={email} 
                 onChange={(e) => setEnamil(e.target.value)} 
-                // pattern="[0-9]*" 
                 pattern="[a-zA-Z0-9._@]*"
                 maxLength={40} 
                 />
@@ -171,7 +168,6 @@ const Register = () => {
                 placeholder="Password" 
                 value={password} 
                 onChange={(e) => setPassword(e.target.value)}
-                // pattern="[a-zA-Z0-9]*" 
                 />
       </div>
 
@@ -196,7 +192,7 @@ const Register = () => {
                 />
       </div>
 
-            <div className="form-group mt-3">
+      <div className="form-group mt-3">
         <label>Age<small style={{ color: "red"}}>*</small></label>
         <input type='text'
                className="form-control mt-1" 
@@ -208,12 +204,10 @@ const Register = () => {
                 />
       </div>
       <div className="d-grid gap-2 mt-4 mb-4">
-                        <button type="submit" className="btn btn-primary">
-                            Submit
-                        </button>
-                    </div>
-      {/* <input type='submit' value="Rejestruj" className="btn btn-block" />
-       */}
+          <button type="submit" className="btn btn-primary">
+              Submit
+          </button>
+      </div>
       </div>
     </form>
     </div>

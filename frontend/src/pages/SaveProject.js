@@ -9,8 +9,6 @@ const SaveProject = () => {
   const { projectName, projectAbout, projectStatus, projectStartDate, projectEndDate, projectId, projectStatusData } = location.state
   let { authTokens } = useContext(AuthContext);
   const navigate = useNavigate();
-//   const [projectDetails, setProjectDetails] = useState([])
-
 
   const onUpdate = (task) => {
     fetch('http://127.0.0.1:8000/api/project/'+projectId+'/', {
@@ -57,7 +55,6 @@ useEffect(() => {
 
                 <li class="list-group-item">Started: {projectStartDate}</li>
               <li class="list-group-item">Ends: {projectEndDate}</li>
-              {/*<li class="list-group-item">Created by: {projectDetails.user}</li>*/}
               <li class="list-group-item">Status: {projectStatusData[projectStatus]}
                             </li> 
             </ul>
