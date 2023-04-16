@@ -73,7 +73,7 @@ class ProjectView(ModelViewSet):
 
     def get_queryset(self):
         if self.action == "list":
-            queryset = Project.objects.filter(user=self.request.user)
+            queryset = Project.objects.filter(users=self.request.user.pk)
         elif self.action in ["destroy", "retrieve", "update", "partial_update"]:
             project_pk = self.kwargs.get("pk")
             queryset = Project.objects.filter(id=project_pk)
