@@ -13,9 +13,6 @@ const LoginPage = () => {
                     <h1 className="auth-form-title">Sign in</h1>
                     <div className="text-center">
                     or create account <Link to="/register" >here.</Link>                   
-                        {/* <span className="link-primary"> */}
-                            {/* <Link to="/register" >here.</Link> */}
-                        {/* </span> */}
                     </div>
                     <div className="form-group mt-4">
                         <label>Email address</label>
@@ -25,7 +22,6 @@ const LoginPage = () => {
                         <label>Password</label>
                         <input type="password" name="password" className="form-control mt-1" placeholder="Enter password"/>
                     </div>
-                    {/* <input type="submit"/> */}
                     <div className="d-grid gap-2 mt-4 mb-4">
                         <button type="submit" className="btn btn-primary">
                             Submit

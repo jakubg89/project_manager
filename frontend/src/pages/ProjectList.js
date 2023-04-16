@@ -10,12 +10,13 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 
+
 import { FaTimes, FaComments, FaRegEdit, FaArrowCircleRight } from 'react-icons/fa'
 
 
 const ProjectList = () => {
   let [projects, setProjects] = useState([]);
-  let { authTokens } = useContext(AuthContext);
+  let { authTokens, user } = useContext(AuthContext);
   const [projectStatus, setProjectStatus] = useState([]);
 
   // Modal
@@ -44,13 +45,12 @@ const ProjectList = () => {
     setShowDelete(true);
   }
 
-
   // Form
   const [comment, setComment] = useState('')
   const navigate = useNavigate();
 
   const onAddComment = (comment) => {
-    fetch('http://127.0.0.1:8000/api/user/register/', {
+    fetch('http://127.0.0.1:8000/api/comment/', {
       method: 'POST',
       body: JSON.stringify(comment),
       headers:{
@@ -78,8 +78,8 @@ const ProjectList = () => {
     console.log(comment, projectId)
     onAddComment({ 
       content: comment,
-      project: projectId,
-      // user
+      project_id: projectId,
+      user_id: user.user_id,
     })
     navigate('/project-details', {
       state: {
@@ -88,7 +88,6 @@ const ProjectList = () => {
     })
     setComment('')
   }
-
 
   const getProjectStatus = async () => {
     let response = await fetch('http://127.0.0.1:8000/api/project_status/', {
@@ -166,14 +165,12 @@ const ProjectList = () => {
         <td>{projectStatus.status[project.status]}</td>
         <td>
           <Link to='/edit-project' state={{ projectId: project.id, projectStatus2: String(project.status) }}>
-          {/* <Link to='/edit-project' state={{ project1: project, projectStatus: projectStatus }}> */}
             <FaRegEdit className="table-icons"/>
           </Link>
           <FaComments className="table-icons" onClick={() => handleShow(project.name, project.id)}/>
-          <Link to='/project-details' state={{ projectId: project.id }}>
+          <Link to='/project-details' state={{ projectId: project.id, projectStatsText: projectStatus.status[project.status] }}>
             <FaArrowCircleRight className="table-icons"/>
           </Link>
-          {/* <FaTimes className="table-icons delete"/> */}
           <FaTimes className="table-icons delete" onClick={() => handleShowDelete(project.id)}/>
         </td>
       </tr>  
@@ -194,7 +191,7 @@ const ProjectList = () => {
               className="mb-3"
               controlId="exampleForm.ControlTextarea"
             >
-              <Form.Label>Add comment {projectId}</Form.Label>
+              <Form.Label>Add comment </Form.Label>
               <Form.Control as="textarea" rows={3} value={comment} 
                onChange={(e) => setComment(e.target.value)}/>
             </Form.Group>
@@ -207,8 +204,6 @@ const ProjectList = () => {
         </Modal.Footer>
       </Modal>
       
-
-
       <Modal show={showDelete} onHide={handleCloseDelete}>
         <Modal.Header closeButton>
           <Modal.Title>Warning</Modal.Title>

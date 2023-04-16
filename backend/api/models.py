@@ -54,20 +54,10 @@ class Project(models.Model):
     added_date = models.DateTimeField(auto_now_add=True)
     start_date = models.DateTimeField(blank=False, null=True)
     end_date = models.DateTimeField(blank=False, null=True)
-    user = models.ForeignKey(
-        "User", related_name="user", on_delete=models.CASCADE
-    )
+    user = models.ForeignKey("User", related_name="user", on_delete=models.CASCADE)
+    users = models.ManyToManyField(User, related_name="projects")
 
     def save(self, *args, **kwargs):
         if not self.pk:
             self.status = "N"
         super().save(*args, **kwargs)
-
-
-class ProjectAssignedUser(models.Model):
-    project = models.ForeignKey(
-        "Project", related_name="project", on_delete=models.CASCADE
-    )
-    user = models.ForeignKey(
-        "User", related_name="user_assigned", on_delete=models.CASCADE
-    )
